@@ -1,0 +1,93 @@
+﻿<Window x:Class="PruebaTécnica.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:local="clr-namespace:PruebaTécnica"
+        mc:Ignorable="d" Title="Prueba Técnica"
+        WindowStartupLocation="CenterScreen" Height="900" Width="1700"  ResizeMode="NoResize">
+    <Window.Resources>
+        <Style TargetType="{x:Type TextBlock}" x:Key="Cell">
+            <Setter Property="HorizontalAlignment" Value="Left" />
+            <Setter Property="TextBlock.VerticalAlignment" Value="Center" />
+            <Setter Property="TextBlock.TextWrapping" Value="Wrap" />
+        </Style>
+    </Window.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="0.10*" />
+            <RowDefinition Height="0.10*" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <TextBlock Text="Clients" Grid.Row="0" VerticalAlignment="Center" Margin="8,0,0,0" FontSize="50"
+                Foreground="#FF005097"  FontWeight="Bold" />
+        <Separator Grid.Row="0" VerticalAlignment="Bottom"/>
+        <StackPanel Orientation="Horizontal" Grid.Row="1" Background="White" HorizontalAlignment="Stretch">
+            <TextBox x:Name="names" materialDesign:HintAssist.IsFloating="True" materialDesign:HintAssist.Hint="Nombres"
+                    Width="300" Height="50" Margin="20,0,10,0" FontSize="18" />
+            <TextBox x:Name="last_names" materialDesign:HintAssist.Hint="Apellidos"
+                    materialDesign:HintAssist.IsFloating="True" Width="300" Margin="20,0,10,0" Height="50" FontSize="18" />
+            <TextBox x:Name="dui" materialDesign:HintAssist.Hint="DUI"
+                    materialDesign:HintAssist.IsFloating="True" Width="300" Margin="20,0,10,0" Height="50" FontSize="18" />
+            <DatePicker x:Name="fecha_nacimiento"  materialDesign:HintAssist.Hint="Fecha Nacimiento"
+                    Style="{StaticResource MaterialDesignFloatingHintDatePicker}" Width="300" Margin="20,0,10,0"
+                    Height="50" FontSize="18" />
+
+            <Button x:Name="btn_addClient" Content="{materialDesign:PackIcon Kind=Add}" ToolTip="Icon"
+                    IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"
+                    Margin="40,0,0,0" Click="btn_addClient_Click"/>
+            <Button x:Name="btn_updateClient" Content="{materialDesign:PackIcon Kind=Update}" ToolTip="Icon" Visibility="Collapsed"
+                    IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"
+                    Margin="40,0,0,0" Click="btn_updateClient_Click" />
+        </StackPanel>
+        <DataGrid x:Name="dgt_clients" Grid.Row="2" VerticalAlignment="Stretch" VerticalScrollBarVisibility="Auto"
+                AutoGenerateColumns="False" CanUserAddRows="False" IsReadOnly="True" RowHeight="200" FontSize="18" Margin="16">
+
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="ID" Width="auto" Binding="{Binding Path=id}"
+                        ElementStyle="{StaticResource Cell}">
+                </DataGridTextColumn>
+                <DataGridTextColumn Header="Nombres" Width="auto" Binding="{Binding Path=nombres}"
+                        ElementStyle="{StaticResource Cell}">
+                </DataGridTextColumn>
+                <DataGridTextColumn Header="Apellidos" Width="auto" Binding="{Binding Path=apellidos}"
+                        ElementStyle="{StaticResource Cell}">
+                </DataGridTextColumn>
+                <DataGridTextColumn Header="DUI" Width="auto" Binding="{Binding Path=dui}"
+                        ElementStyle="{StaticResource Cell}">
+                </DataGridTextColumn>
+                <DataGridTextColumn Header="Fecha Nacimiento" Width="auto"
+                        Binding="{Binding Path=fecha_nacimiento, StringFormat=\{0:dd-MM-yyyy\}}"
+                        ElementStyle="{StaticResource Cell}">
+                </DataGridTextColumn>
+                <DataGridTemplateColumn Width="auto">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button x:Name="btn_actualizar" Background="LightGreen" Width="auto" Height="50"
+                                    Click="btn_actualizar_Click" UseLayoutRounding="True" Margin="20">
+                                <Button.Content>
+                                    <TextBlock Text="Actualizar" />
+                                </Button.Content>
+                            </Button>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn Width="auto">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button x:Name="btn_delete" Background="Red" Width="auto" Height="50"
+                                    Click="btn_delete_Click" UseLayoutRounding="True" Margin="20">
+                                <Button.Content>
+                                    <TextBlock Text="Eliminar" />
+                                </Button.Content>
+                            </Button>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+
+
+    </Grid>
+</Window>
